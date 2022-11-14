@@ -32,7 +32,6 @@ router.get('/todos/:id', (ctx) =>{
 })
 
 router.post('/todos', (ctx) =>{
-    console.log(ctx.request.body)
 
     const newTask = {
         id: todos.length + 1,
@@ -43,7 +42,10 @@ router.post('/todos', (ctx) =>{
 })
 
 router.put('/todos/:id', (ctx, next) =>{
-
+    console.log(ctx.request)
+    const task = todos.find(t => parseInt(ctx.params.id) === t.id)
+    task.title = ctx.request.body.title
+    ctx.body = todos
 })
 
 router.delete('/todos/:id', (ctx, next)=>{
