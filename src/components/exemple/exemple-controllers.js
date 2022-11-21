@@ -52,8 +52,9 @@ export async function update (ctx) {
 
 export async function deleteThis (ctx) {
     try {
-        Exemple.findOneAndDelete({ _id: ctx.params.id})
-        ctx.body = await Exemple.find({})
+        // Exemple.findOneAndDelete({ _id: ctx.params.id})
+        // ctx.body = await Exemple.find({})
+        ctx.body = await Exemple.findByIdAndRemove(ctx.params.id)
     } catch (e) {
         ctx.badRequest({message:e.message})
     }
