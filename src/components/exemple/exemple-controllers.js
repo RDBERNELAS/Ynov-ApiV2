@@ -9,6 +9,14 @@ export async function index (ctx) {
     }
 }
 
+export async function readOne (ctx) {
+    try {
+        ctx.body = await Exemple.findById(ctx.params.id)
+    } catch (e) {
+        ctx.badRequest({message:e.message})
+    }
+}
+
 export async function create (ctx) {
     try {
         const exempleValidationSchema = Joi.object({
@@ -17,25 +25,12 @@ export async function create (ctx) {
             color: Joi.array().has(Joi.string()),
             price: Joi.number().required()
         })
-        // const objTest = { name: 'test', value: 123}
-        // const arrTest = ['value1', 'value2']
-        // const {name, nested: {color}} = objTest
-        // const [val1] = arrTest
 
         const { error } = exempleValidationSchema.validate(ctx.request.body)
         if (error) throw new Error(error)
-        // ctx.body = await Exemple.find({})
 
         Exemple.create(ctx.request.body)
         ctx.body = await Exemple.find({})
-    } catch (e) {
-        ctx.badRequest({message:e.message})
-    }
-}
-
-export async function readOne (ctx) {
-    try {
-        ctx.body = await Exemple.findById(ctx.params.id)
     } catch (e) {
         ctx.badRequest({message:e.message})
     }
@@ -57,8 +52,8 @@ export async function update (ctx) {
 
 export async function deleteThis (ctx) {
     try {
-        // Exemple.findByIdAndDelete(ctx.request.params)
-        console.log("TestDelete")
+        Exemple.findOneAndDelete({ _id: ctx.params.id})
+        ctx.body = await Exemple.find({})
     } catch (e) {
         ctx.badRequest({message:e.message})
     }
