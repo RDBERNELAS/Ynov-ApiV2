@@ -5,10 +5,11 @@ const exemples = new Router()
 
 exemples.get('/', ExempleControllers.index)
 
-exemples.get('/:id', (ctx)=> {
-    const task = todos.find(t => parseInt(ctx.params.id) === t.id)
-    ctx.body = task
-})
+// exemples.get('/:id', (ctx)=> {
+//     const task = todos.find(t => parseInt(ctx.params.id) === t.id)
+//     ctx.body = task
+// })
+exemples.get('/:id', ExempleControllers.readOne)
 
 // exemples.post('/', (ctx) =>{
 
@@ -22,16 +23,20 @@ exemples.get('/:id', (ctx)=> {
 
 exemples.post('/', ExempleControllers.create)
 
-exemples.put('/:id', (ctx, next) =>{
-    console.log(ctx.request)
-    const task = todos.find(t => parseInt(ctx.params.id) === t.id)
-    task.title = ctx.request.body.title
-    ctx.body = todos
-})
+// exemples.put('/:id', (ctx, next) =>{
+//     console.log(ctx.request)
+//     const task = todos.find(t => parseInt(ctx.params.id) === t.id)
+//     task.title = ctx.request.body.title
+//     ctx.body = todos
+// })
 
-exemples.delete('/:id', (ctx, next)=>{
-    todos.splice(ctx.params.id-1, 1)
-    ctx.body = todos
-})
+exemples.put('/:id',ExempleControllers.update)
+
+// exemples.delete('/:id', (ctx, next)=>{
+//     todos.splice(ctx.params.id-1, 1)
+//     ctx.body = todos
+// })
+
+exemples.del('/:id',ExempleControllers.deleteThis)
 
 export default exemples
