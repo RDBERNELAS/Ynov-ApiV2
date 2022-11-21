@@ -35,7 +35,7 @@ export async function create (ctx) {
 
 export async function readAll (ctx) {
     try {
-
+        ctx.body = await Exemple
     } catch (e) {
         ctx.badRequest({message:e.message})
     }
