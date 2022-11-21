@@ -3,7 +3,7 @@ import Joi from 'joi'
 
 export async function index (ctx) {
     try{
-        console.log('index')
+        ctx.body = await Task.find({})
     } catch (e) {
         ctx.badRequest({message:e.message})
     }
@@ -11,7 +11,7 @@ export async function index (ctx) {
 
 export async function readOne (ctx) {
     try{
-        console.log('readOne')
+        ctx.body = await Task.findById(ctx.params.id)
     } catch (e) {
         ctx.badRequest({message:e.message})
     }
@@ -19,7 +19,16 @@ export async function readOne (ctx) {
 
 export async function create (ctx) {
     try{
-        console.log('Create')
+        const taskValidationSchema = Joi.object({
+            title: Joi.string().required(),
+            description: Joi.string().required()
+        })
+
+        const {error} = exempleValidationSchema.validate(ctx.request.body)
+        if (error) throw new Error(error)
+
+        Task.create(ctx.request.body)
+        ctx.body = await Task.find({})
     } catch (e) {
         ctx.badRequest({message:e.message})
     }
@@ -35,7 +44,7 @@ export async function update (ctx) {
 
 export async function deleteThis (ctx) {
     try{
-        console.log('Delete')
+        ctx.body = await Task.findByIdAndRemove(ctx.params.id)
     } catch (e) {
         ctx.badRequest({message:e.message})
     }
