@@ -14,7 +14,7 @@ export async function create (ctx) {
         const exempleValidationSchema = Joi.object({
             name : Joi.string().required(),
             description : Joi.string(),
-            colors: Joi.array().has(Joi.string()),
+            color: Joi.array().has(Joi.string()),
             price: Joi.number().required()
         })
         // const objTest = { name: 'test', value: 123}
@@ -24,13 +24,16 @@ export async function create (ctx) {
 
         const { error } = exempleValidationSchema.validate(ctx.request.body)
         if (error) throw new Error(error)
+        // ctx.body = await Exemple.find({})
+
+        Exemple.create(ctx.request.body)
         ctx.body = await Exemple.find({})
     } catch (e) {
         ctx.badRequest({message:e.message})
     }
 }
 
-export async function readAll () {
+export async function readAll (ctx) {
     try {
 
     } catch (e) {
@@ -38,7 +41,7 @@ export async function readAll () {
     }
 }
 
-export async function updateThis () {
+export async function updateThis (ctx) {
     try {
 
     } catch (e) {
